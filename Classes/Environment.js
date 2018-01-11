@@ -62,9 +62,9 @@ module.exports = class Environment {
     // Add the cache check flag.
     npmArgs = (npmFlag !== '') ? npmArgs.concat(npmFlag) : npmArgs;
 
-      const npmInstall = spawnSync(`npm`, npmArgs, {
-        cwd: correctPath
-      });
+    const npmInstall = spawnSync(`npm`, npmArgs, {
+      cwd: correctPath
+    });
 
     const testForSuccess = new RegExp(/packages in (\d+)\.(\d+)s/, 'g');
 
@@ -81,7 +81,7 @@ module.exports = class Environment {
 
     // Load dependencies from yml file.
     try {
-      const yml = yaml.safeLoad(fs.readFileSync(path.join(__filename, '/../../../tests-config.yml'), 'utf8'));
+      const yml = yaml.safeLoad(fs.readFileSync(path.join(__filename, '/../../../../tests-config.yml'), 'utf8'));
       console.log('Loaded test-config.yml successfully');
       this.config.dependencies = yml.config.dependencies;
       // Supply the site url through a environmental variable for use later in the testing framework.
@@ -103,29 +103,29 @@ module.exports = class Environment {
         cwd: correctPath
       });
 
-    const testForSuccess = new RegExp(/packages in (\d+)\.(\d+)s/, 'g');
+      const testForSuccess = new RegExp(/packages in (\d+)\.(\d+)s/, 'g');
 
-    npmInstall.stdout.on('data', (data) => {
-      console.log(`stdout: ${data}`);
-      if (testForSuccess.test(data)) {
-        console.log('Found')
-        resolve(true);
-    }
+      npmInstall.stdout.on('data', (data) => {
+        console.log(`stdout: ${data}`);
+        if (testForSuccess.test(data)) {
+          console.log('Found')
+          resolve(true);
+        }
 
-    npmInstall.stderr.on('data', (data) => {
-      //console.log(`stderr: ${data}`);
-      // ToDo: Improve error handling.
-      //reject(false);
-    });
-  });
-  })
+        npmInstall.stderr.on('data', (data) => {
+          //console.log(`stderr: ${data}`);
+          // ToDo: Improve error handling.
+          //reject(false);
+        });
+      });
+    })
   }
 
   startServer() {
-      // We use npx because gulp binaries can be allusive.
-      const webserver = spawn(`npx`, [this.config.runCommand, this.config.commandArgs], {
-        cwd: correctPath
-      });
+    // We use npx because gulp binaries can be allusive.
+    const webserver = spawn(`npx`, [this.config.runCommand, this.config.commandArgs], {
+      cwd: correctPath
+    });
   }
   pingUrl() {
 
@@ -139,9 +139,9 @@ module.exports = class Environment {
       setInterval();
       setTimeout();
 
-    if (pingProcess.output.toString('utf8').match(testForSuccess)) {
-      resolve(true);
-    }
+      if (pingProcess.output.toString('utf8').match(testForSuccess)) {
+        resolve(true);
+      }
 
     })
   }
