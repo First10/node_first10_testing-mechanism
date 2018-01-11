@@ -1,0 +1,19 @@
+{
+  "name": "node_first10_testing-mechanism",
+  "version": "1.0.0",
+  "description": "Designed to make automated functional testing easy.",
+  "main": "index.js",
+  "scripts": {
+    "test": "node index"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/First10/node_first10_testing-mechanism.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/First10/node_first10_testing-mechanism/issues"
+  },
+  "homepage": "https://github.com/First10/node_first10_testing-mechanism#readme"
+}

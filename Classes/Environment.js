@@ -3,7 +3,8 @@ const path = require('path');
 const fs   = require('fs');
 const defaults = {
   deps: ['jest', 'puppeteer'],
-  coreDependencies: ['npx', 'js-yaml']
+  coreDependencies: ['npx', 'js-yaml'],
+  siteUrl: 'localhost'
 };
 
 const correctPath = path.resolve(path.join(__filename, '/../../..'));
@@ -17,6 +18,9 @@ module.exports = class Environment {
     config.dependencies = defaults.deps;
     this.config = config;
 
+    // Set the site url to a default common DNS.
+    this.siteUrl = process.env.siteUrl = defaults.siteUrl;
+
   }
 
   init() {
@@ -24,7 +28,7 @@ module.exports = class Environment {
 
     return [this.setupDependancies(npmFlags)];
   }
-  
+
   getConfig(config) {
     switch (config) {
       case 'testFramework':
@@ -80,12 +84,11 @@ module.exports = class Environment {
       const yml = yaml.safeLoad(fs.readFileSync(path.join(__filename, '/../../../tests-config.yml'), 'utf8'));
       console.log('Loaded test-config.yml successfully');
       this.config.dependencies = yml.config.dependencies;
-      this.siteUrl = yml.siteUrl;
+      // Supply the site url through a environmental variable for use later in the testing framework.
+      this.siteUrl = process.env.siteUrl = yml.siteUrl;
       this.testFramework = yml.testFramework;
 
-      // Supply the site url through a environmental variable for use later in the testing framework.
-      process.env.siteUrl = yml.siteUrl
-      
+
     } catch (e) {
       console.log(`There was a problem when trying to retrieve ../tests-config.yml`, e);
     }
