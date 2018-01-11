@@ -33,6 +33,8 @@ module.exports = class Environment {
     switch (config) {
       case 'testFramework':
         return this.testFramework;
+      default:
+        throw new Error('Test framework unknown');
     }
   }
 
@@ -83,13 +85,13 @@ module.exports = class Environment {
     try {
       const yml = yaml.safeLoad(fs.readFileSync(path.join(__filename, '/../../../../tests-config.yml'), 'utf8'));
       console.log('Loaded test-config.yml successfully');
+
       this.config.dependencies = yml.config.dependencies;
       // Supply the site url through a environmental variable for use later in the testing framework.
       this.siteUrl = process.env.siteUrl = yml.siteUrl;
       this.testFramework = yml.testFramework;
-
-
-    } catch (e) {
+    }
+    catch (e) {
       console.log(`There was a problem when trying to retrieve ../tests-config.yml`, e);
     }
 

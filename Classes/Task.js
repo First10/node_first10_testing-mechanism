@@ -9,7 +9,7 @@ module.exports = class Task {
   runTests(framework) {
     switch(framework) {
       case 'cucumber':
-        this.runCucumber();
+        return this.runCucumber();
         break;
       default:
         throw new Error('Unknown test framework: ' + framework);
@@ -28,7 +28,7 @@ module.exports = class Task {
 
   runCucumber() {
     return new Promise((resolve, reject) => {
-      const cucumber = spawn(`node`, ['./node_modules/.bin/cucumber-js'], {
+      const cucumber = spawn(`node`, ['./node_modules/.bin/cucumber'], {
         cwd: path.join(__dirname, '../..')
       });
 

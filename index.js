@@ -7,6 +7,7 @@ const task = new Task();
 
 
 Promise.all(environment.init()).then((values) => {
+  console.log('Start running tests.');
   task.runTests(environment.getConfig('testFramework'))
     .then((result) => {
       console.log('Finished');
