@@ -3,7 +3,8 @@ const path = require('path');
 const fs   = require('fs');
 const defaults = {
   deps: ['jest', 'puppeteer'],
-  coreDependencies: ['npx', 'js-yaml'],
+  // ToDo: Investigate why npm 5 rempves packages.
+  coreDependencies: ['npx', 'js-yaml', 'git+ssh://git@github.com/First10/node_first10_testing-mechanism.git#master'],
   siteUrl: 'localhost'
 };
 
