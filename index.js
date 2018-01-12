@@ -6,38 +6,18 @@ const environment = new Environment();
 const task = new Task();
 
 
-// ToDo: The array litural will need removing once we're returning more than one item.
-Promise.all([environment.init()]).then((values) => {
+// ToDo: The array literal will need removing once we're returning more than one item.
+Promise.all([environment.init()])
+.then((values) => {
   console.log('Start running tests.');
+
   task.runTests(environment.getConfig('testFramework'))
-    .then((result) => {
-      console.log('Finished');
-      console.log(result);
+  .then((result) => {
+    console.log('Finished tests');
+    console.log(result);
+
+    // Report results
+    task.reportCucumber();
   });
+
 });
-
-
-// Run tests.
-
-// Report results
-
-
-// var options = {
-//   theme: 'bootstrap',
-//   jsonFile: 'test/report/cucumber_report.json',
-//   output: 'test/report/cucumber_report.html',
-//   reportSuiteAsScenarios: true,
-//   launchReport: true,
-//   metadata: {
-//     "App Version":"0.3.2",
-//     "Test Environment": "STAGING",
-//     "Browser": "Chrome  54.0.2840.98",
-//     "Platform": "Windows 10",
-//     "Parallel": "Scenarios",
-//     "Executed": "Remote"
-//   }
-// };
-//
-// reporter.generate(options);
-//
-
