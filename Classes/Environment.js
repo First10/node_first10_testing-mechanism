@@ -75,7 +75,6 @@ module.exports = class Environment {
       console.log('Successfully installed core dependencies');
       return npmFlag
     }
-
   }
 
   setupDependancies() {
@@ -130,6 +129,7 @@ module.exports = class Environment {
       cwd: correctPath
     });
   }
+
   pingUrl() {
 
     return new Promise((resolve, reject) => {

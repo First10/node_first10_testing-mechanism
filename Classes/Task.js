@@ -37,7 +37,9 @@ module.exports = class Task {
       });
 
     cucumber.stdout.on('data', (data) => {
-      console.log(`cucumber -> ${data}`);
+      if (data !== '.') {
+        console.log(`cucumber -> ${data}`);
+      }
     });
 
     cucumber.stderr.on('data', (data) => {
