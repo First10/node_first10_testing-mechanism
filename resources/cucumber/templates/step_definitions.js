@@ -60,12 +60,6 @@ defineSupportCode(function({ Given, When, Then }) {
     assert.equal(titleText, regex, `Title text is incorrect ${titleText}`);
   });
 
-
-  Then(/^I should see "([a-zA-Z\s]*)" as the page title$/, async (regex) => {
-    const titleText = await this.page.$eval('h1', e => e.innerText);
-    assert.equal(titleText, regex, `Title text is incorrect ${titleText}`);
-  });
-
   Then(/^I should see a search result with the title \"([a-zA-Z\s]*)\"$/, async (targetTitle) => {
     const itemTitlefound = await this.page.$$eval('.products .product-item-link', (e) => {
       let titles = [];
