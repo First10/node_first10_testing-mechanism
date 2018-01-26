@@ -92,7 +92,7 @@ module.exports = class Task {
   async findFile(beginsWith, thePath) {
     console.log('the path', thePath);
     console.log('dir', __dirname);
-    const bin = await fs.readdir(path.join(__dirname, thePath));
+    const bin = await fs.readdir(path.join(__dirname, thePath), (items) => items);
 
     let correctFile = null;
 
