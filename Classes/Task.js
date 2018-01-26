@@ -92,7 +92,7 @@ module.exports = class Task {
   async findFile(beginsWith, thePath) {
     console.log('the path', thePath);
     console.log('dir', __dirname);
-    const bin = await fs.readdir(path.join(__dirname, thePath);
+    const bin = await fs.readdir(path.join(__dirname, thePath));
 
     let correctFile = null;
 
@@ -102,7 +102,7 @@ module.exports = class Task {
         correctFile = item;
       }
     });
-    
+
     if (correctFile === null) throw new Error(`Failed to find ${beginsWith} in ${path}`);
 
     return bin;
