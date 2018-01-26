@@ -40,7 +40,7 @@ module.exports = class Task {
 
         console.log(path.join(__dirname, '../../../features/'));
 
-        const cucumber = spawn(`node`, [`node_modules/cucumber/bin/${cucumberBin}`, './features/**/*.feature', '-f', 'json:cucumber_report.json'], {
+        const cucumber = spawn(`node`, [`node_modules/cucumber/bin/${cucumberBin}`, '-f', 'json:cucumber_report.json'], {
           cwd: path.join(__dirname, '../../..')
         });
 
