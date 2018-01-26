@@ -89,7 +89,7 @@ module.exports = class Task {
   }
 
   // ToDo: Move to somewhere better.
-  async findFile(beginsWith, thePath) {
+  async findFile(thePath, beginsWith) {
     console.log('the path', thePath);
     console.log('dir', __dirname);
     const bin = await fs.readdir(path.join(__dirname, thePath), (items) => items);
@@ -98,7 +98,7 @@ module.exports = class Task {
 
     bin.forEach((item) => {
       console.log(item);
-      if (item.startsWith('cucumber')) {
+      if (item.startsWith(beginsWith)) {
         correctFile = item;
       }
     });
