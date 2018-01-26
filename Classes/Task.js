@@ -1,5 +1,6 @@
 const { spawn, spawnSync } = require('child_process');
 const path = require('path');
+const fs = require('fs');
 
 
 module.exports = class Task {
@@ -32,7 +33,11 @@ module.exports = class Task {
 
   runCucumber() {
     return new Promise((resolve, reject) => {
-      const cucumber = spawn(`node`, ['node_modules/cucumber/bin/cucumber', '-f', 'json:cucumber_report.json'], {
+
+      let cucumberBin = this.findFile('node_modules/cucumber/', 'cucumber');
+      console.log(cucumberBin);
+
+      const cucumber = spawn(`node`, [`node_modules/cucumber/bin/${cucumberBin}`, '-f', 'json:cucumber_report.json'], {
         cwd: path.join(__dirname, '../../..')
       });
 
@@ -81,5 +86,24 @@ module.exports = class Task {
     };
 
     reporter.generate(options);
+  }
+
+  // ToDo: Move to somewhere better.
+  async findFile(beginsWith, path) {
+    return await fs.readdir(path.resole(__dirname, path), function(err, items) {
+      console.log(items);
+      let correctFile = false;
+
+      for (let i = 0; i < items.length; i++) {
+        console.log(items[i]);
+        if (items[i].startsWith('cucumber')) {
+          correctFile = items[i];
+        }
+      }
+
+      if (correctFile === null) throw new Error(`Failed to find ${beginsWith} in ${path}`);
+
+      return correctFile;
+    });
   }
 }

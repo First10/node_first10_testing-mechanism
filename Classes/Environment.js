@@ -2,7 +2,7 @@ const { spawn, spawnSync } = require('child_process');
 const path = require('path');
 const fs   = require('fs');
 const defaults = {
-  deps: ['jest', 'puppeteer'],
+  deps: ['jest', 'puppeteer', 'request'],
   // ToDo: Investigate why npm 5 rempves packages.
   coreDependencies: ['npx', 'js-yaml', 'git+ssh://git@github.com/First10/node_first10_testing-mechanism.git#master'],
   siteUrl: 'localhost'
