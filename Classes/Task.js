@@ -35,28 +35,30 @@ module.exports = class Task {
     return new Promise((resolve, reject) => {
 
       let cucumberBin = this.findFile('../../../node_modules/cucumber/bin', 'cucumber');
-      console.log(cucumberBin);
 
-      const cucumber = spawn(`node`, [`node_modules/cucumber/bin/${cucumberBin}`, '-f', 'json:cucumber_report.json'], {
-        cwd: path.join(__dirname, '../../..')
+      cucumberBin.then((cucumberBin) => {
+        console.log(cucumberBin);
+
+        const cucumber = spawn(`node`, [`node_modules/cucumber/bin/${cucumberBin}`, '-f', 'json:cucumber_report.json'], {
+          cwd: path.join(__dirname, '../../..')
+        });
+
+        cucumber.stdout.on('data', (data) => {
+          if (data !== '.') {
+            console.log(`cucumber -> ${data}`);
+          }
+        });
+
+        cucumber.stderr.on('data', (data) => {
+          console.log(`cucumber error -> ${data}`);
+        });
+
+        cucumber.on('close', (code) => {
+          console.log('Testing has ended');
+          resolve(`cucumber process exited with code ${code}`);
+          // webserver.kill('SIGHUP');
+        })
       });
-
-    cucumber.stdout.on('data', (data) => {
-      if (data !== '.') {
-        console.log(`cucumber -> ${data}`);
-      }
-    });
-
-    cucumber.stderr.on('data', (data) => {
-      console.log(`cucumber error -> ${data}`);
-    });
-
-    cucumber.on('close', (code) => {
-      console.log('Testing has ended');
-      resolve(`cucumber process exited with code ${code}`);
-      // webserver.kill('SIGHUP');
-    })
-
   });
   }
 
@@ -90,11 +92,8 @@ module.exports = class Task {
 
   // ToDo: Move to somewhere better.
   findFile(thePath, beginsWith) {
-    console.log('the path', thePath);
-    console.log('dir', __dirname);
-    console.log('Full path ', path.join(__dirname, thePath));
-    const bin = (async function (thePath, beginsWith) {
-      const bin = await fs.readdir(path.join(__dirname, thePath), (items) => {
+    return new Promise(function(resolve, reject) {
+      fs.readdir(path.join(__dirname, thePath), (items) => {
         let correctFile = null;
 
         items.forEach((item) => {
@@ -104,16 +103,11 @@ module.exports = class Task {
           }
         });
 
-        if (correctFile === null) throw new Error(`Failed to find ${beginsWith} in ${path}`);
-        return correctFile;
-      });
-
-      console.log(bin, 'inside async')
-
-      return bin;
-    })(thePath, beginsWith)
-
-    console.log('Out of async ', bin);
-
+        if (correctFile === null) {
+          throw new Error(`Failed to find ${beginsWith} in ${path}`)
+        }
+        return resolve(correctFile);
+      })
+    });
   }
 }
