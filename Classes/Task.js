@@ -93,7 +93,9 @@ module.exports = class Task {
   // ToDo: Move to somewhere better.
   findFile(thePath, beginsWith) {
     return new Promise(function(resolve, reject) {
-      fs.readdir(path.join(__dirname, thePath), (items) => {
+      console.log('Full path: ', path.join(__dirname, thePath));
+      fs.readdir(path.join(__dirname, thePath), (error, items) => {
+        if (error) throw new Error('Directory reading error: ' + JSON.stringify(error));
         let correctFile = null;
 
         items.forEach((item) => {
