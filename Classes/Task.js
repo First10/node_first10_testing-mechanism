@@ -90,22 +90,20 @@ module.exports = class Task {
 
   // ToDo: Move to somewhere better.
   async findFile(beginsWith, thePath) {
-    console.log(path.join(__dirname, thePath));
-    const bin = await fs.readdir(path.join(__dirname, thePath), function(err, items) {
-      console.log(items);
-      let correctFile = false;
+    console.log('the path', thePath);
+    console.log('dir', __dirname);
+    const bin = await fs.readdir(path.join(__dirname, thePath);
 
-      for (let i = 0; i < items.length; i++) {
-        console.log(items[i]);
-        if (items[i].startsWith('cucumber')) {
-          correctFile = items[i];
-        }
+    let correctFile = null;
+
+    bin.forEach((item) => {
+      console.log(item);
+      if (item.startsWith('cucumber')) {
+        correctFile = item;
       }
-
-      if (correctFile === null) throw new Error(`Failed to find ${beginsWith} in ${path}`);
-
-      return correctFile;
     });
+    
+    if (correctFile === null) throw new Error(`Failed to find ${beginsWith} in ${path}`);
 
     return bin;
   }
