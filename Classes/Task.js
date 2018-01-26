@@ -34,7 +34,7 @@ module.exports = class Task {
   runCucumber() {
     return new Promise((resolve, reject) => {
 
-      let cucumberBin = this.findFile('node_modules/cucumber/', 'cucumber');
+      let cucumberBin = this.findFile('node_modules/cucumber/bin', 'cucumber');
       console.log(cucumberBin);
 
       const cucumber = spawn(`node`, [`node_modules/cucumber/bin/${cucumberBin}`, '-f', 'json:cucumber_report.json'], {
@@ -90,7 +90,7 @@ module.exports = class Task {
 
   // ToDo: Move to somewhere better.
   async findFile(beginsWith, path) {
-    const bin = await fs.readdir(path.resolve(__dirname, path), function(err, items) {
+    const bin = await fs.readdir(path.resolve(path), function(err, items) {
       console.log(items);
       let correctFile = false;
 
