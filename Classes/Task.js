@@ -94,7 +94,7 @@ module.exports = class Task {
     console.log('dir', __dirname);
     console.log('Full path ', path.join(__dirname, thePath));
     const bin = (async function (thePath, beginsWith) {
-      const bin = fs.readdir(path.join(__dirname, thePath), (items) => {
+      const bin = await fs.readdir(path.join(__dirname, thePath), (items) => {
         let correctFile = null;
 
         items.forEach((item) => {
