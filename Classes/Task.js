@@ -90,7 +90,7 @@ module.exports = class Task {
 
   // ToDo: Move to somewhere better.
   async findFile(beginsWith, path) {
-    return await fs.readdir(path.resole(__dirname, path), function(err, items) {
+    const bin = await fs.readdir(path.resolve(__dirname, path), function(err, items) {
       console.log(items);
       let correctFile = false;
 
@@ -105,5 +105,7 @@ module.exports = class Task {
 
       return correctFile;
     });
+
+    return bin;
   }
 }
