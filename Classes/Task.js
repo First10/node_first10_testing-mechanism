@@ -37,9 +37,10 @@ module.exports = class Task {
       let cucumberBin = this.findFile('../../../node_modules/cucumber/bin', 'cucumber');
 
       cucumberBin.then((cucumberBin) => {
-        console.log(cucumberBin);
 
-        const cucumber = spawn(`node`, [`node_modules/cucumber/bin/${cucumberBin}`, '-f', 'json:cucumber_report.json'], {
+        console.log(path.join(__dirname, '../../../features/'));
+
+        const cucumber = spawn(`node`, [`node_modules/cucumber/bin/${cucumberBin}`, './features/**/*.feature', '-f', 'json:cucumber_report.json'], {
           cwd: path.join(__dirname, '../../..')
         });
 
