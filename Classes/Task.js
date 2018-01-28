@@ -67,10 +67,19 @@ module.exports = class Task {
 
     const reporter = require('cucumber-html-reporter');
 
-    let osType = os.type();
-    let osVersion = os.release();
-    osType = (osType === 'Darwin') ? process.env._system_name : osType;
-    osVersion = (osType === 'OSX') ? process.env._system_version : osVersion;
+    let osType = null;
+    let osVersion = null;
+
+    if (typeof os === 'object') {
+      osType = os.type();
+      osVersion = os.release();
+      osType = (osType === 'Darwin') ? process.env._system_name : osType;
+      osVersion = (osType === 'OSX') ? process.env._system_version : osVersion;
+    }
+    else {
+      osType = 'unknown';
+      osVersion = 'unknown';
+    }
 
     let options = {
       theme: 'bootstrap',
