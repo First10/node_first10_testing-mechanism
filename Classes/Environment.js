@@ -4,7 +4,7 @@ const fs   = require('fs');
 const defaults = {
   deps: ['jest', 'puppeteer', 'request'],
   // ToDo: Investigate why npm 5 rempves packages.
-  coreDependencies: ['yaml', 'git+ssh://git@github.com/First10/node_first10_testing-mechanism.git#master'],
+  coreDependencies: ['js-yaml', 'git+ssh://git@github.com/First10/node_first10_testing-mechanism.git#master'],
   siteUrl: 'localhost'
 };
 
@@ -59,9 +59,9 @@ module.exports = class Environment {
       npmFlag = '';
     }
 
-    let npmArgs = ['install'];
-    // Add the dependencies.
-    npmArgs = npmArgs.concat(this.config.coreDependencies);
+    let npmArgs = ['list'];
+    // Add the dependencies if not present.
+    npmArgs.concat([this.config.coreDependencies, '||', 'install', this.config.coreDependencies])
     // Add the cache check flag.
     npmArgs = (npmFlag !== '') ? npmArgs.concat(npmFlag) : npmArgs;
 
@@ -79,11 +79,11 @@ module.exports = class Environment {
 
   setupDependancies() {
     let npmArgs = ['install'];
-    const yaml = require('yaml');
+    const yaml = require('js-yaml');
 
     // Load dependencies from yml file.
     try {
-      const yml = yaml.eval(fs.readFileSync(path.join(__filename, '/../../../../tests-config.yml'));
+      const yml = yaml.safeLoad(fs.readFileSync(path.join(__filename, '/../../../../tests-config.yml'), 'utf8'));
       console.log('Loaded test-config.yml successfully');
 
       this.config.dependencies = yml.config.dependencies;
@@ -124,6 +124,7 @@ module.exports = class Environment {
   }
 
   startServer() {
+    // We use npx because gulp binaries can be allusive.
     const webserver = spawn(`npm`, [this.config.runCommand, this.config.commandArgs], {
       cwd: correctPath
     });
