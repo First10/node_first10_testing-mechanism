@@ -33,14 +33,10 @@ module.exports = class Task {
 
   runCucumber() {
     return new Promise((resolve, reject) => {
-
-      let cucumberBin = '../../../node_modules/bin/cucumber';
-
-      cucumberBin.then((cucumberBin) => {
-
+      
         console.log(path.join(__dirname, '../../../features/'));
 
-        const cucumber = spawn(`node`, [`node_modules/cucumber/bin/${cucumberBin}`, '-f', 'json:cucumber_report.json'], {
+        const cucumber = spawn(`node`, [`node_modules/.bin/cucumber-js`, '-f', 'json:cucumber_report.json'], {
           cwd: path.join(__dirname, '../../..')
         });
 
@@ -59,7 +55,6 @@ module.exports = class Task {
           resolve(`cucumber process exited with code ${code}`);
           // webserver.kill('SIGHUP');
         })
-      });
   });
   }
 
