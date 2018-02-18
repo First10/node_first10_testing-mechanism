@@ -33,7 +33,7 @@ module.exports = class Task {
 
   runCucumber() {
     return new Promise((resolve, reject) => {
-      
+
         console.log(path.join(__dirname, '../../../features/'));
 
         const cucumber = spawn(`node`, [`node_modules/.bin/cucumber-js`, '-f', 'json:cucumber_report.json'], {
