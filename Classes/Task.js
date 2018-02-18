@@ -34,7 +34,7 @@ module.exports = class Task {
   runCucumber() {
     return new Promise((resolve, reject) => {
 
-      let cucumberBin = this.findFile('../../../node_modules/cucumber/bin', 'cucumber');
+      let cucumberBin = '../../../node_modules/bin/cucumber';
 
       cucumberBin.then((cucumberBin) => {
 
